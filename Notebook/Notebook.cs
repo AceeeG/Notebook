@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Printing;
 
 namespace Notebook
 {
@@ -150,6 +151,22 @@ namespace Notebook
             {
                 this.Close();
             }
+        }
+        public void Print(object sender, EventArgs e)
+        {
+            PrintDocument print = new PrintDocument();
+            print.PrintPage += PrintPageEx;
+            PrintDialog dialog = new PrintDialog();
+            dialog.Document = print;
+            if(dialog.ShowDialog() == DialogResult.OK)
+            {
+                dialog.Document.Print();
+            }
+        }
+
+        public void PrintPageEx(object sender, PrintPageEventArgs e)
+        {
+            e.Graphics.DrawString(TextBox.Text, TextBox.Font, Brushes.Black, 0 , 0);
         }
     }
 }
