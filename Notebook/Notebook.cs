@@ -17,6 +17,7 @@ namespace Notebook
         private string name;
         private bool is_saved;
         private bool is_changed;
+        private bool is_color_changed;
         public Notebook()
         {
             InitializeComponent();
@@ -27,6 +28,7 @@ namespace Notebook
         {
             name = "";
             is_saved = false;
+            is_color_changed = false;
             MakeTitle();
         }
         public void CreateNew(object sender, EventArgs e)
@@ -67,7 +69,7 @@ namespace Notebook
             }
             try
             {
-                StreamWriter stream = new StreamWriter(new_name);
+                StreamWriter stream = new StreamWriter(new_name + ".txt");
                 stream.Write(TextBox.Text);
                 name = new_name;
                 is_saved = true;
@@ -168,5 +170,64 @@ namespace Notebook
         {
             e.Graphics.DrawString(TextBox.Text, TextBox.Font, Brushes.Black, 0 , 0);
         }
+        public void Copy(object sender, EventArgs e)
+        {
+            TextBox.Copy();
+        }
+        public void Paste(object sender, EventArgs e)
+        {
+            TextBox.Paste();
+        }
+        public void Cut(object sender, EventArgs e)
+        {
+            TextBox.Cut();
+        }
+        public void BlackTheme(object sender, EventArgs e)
+        {
+            if (!is_color_changed) 
+            {
+                TextBox.BackColor = Color.Black; 
+                Strip.BackColor = Color.Black;
+                Strip.ForeColor = Color.White;
+                View.ForeColor = Color.White;
+                TextBox.ForeColor = Color.White;
+            }
+            else
+            {
+                TextBox.BackColor = Color.Black;
+                Strip.BackColor = Color.Black;
+                Strip.ForeColor = Color.WhiteSmoke;
+                View.ForeColor = Color.White;
+            }
+        }
+        public void WhiteTheme(object sender, EventArgs e)
+        {
+            if (!is_color_changed)
+            {
+                TextBox.BackColor = Color.LightGray;
+                Strip.BackColor = Color.LightGray;
+                Strip.ForeColor = Color.Black;
+                View.ForeColor = Color.Black;
+                TextBox.ForeColor = Color.Black;
+            }
+            else
+            {
+                TextBox.BackColor = Color.White;
+                Strip.BackColor = Color.LightGray;
+                Strip.ForeColor = Color.Black;
+                View.ForeColor = Color.Black;
+            }
+
+        }
+
+        public void ChangeColor(object sender, EventArgs e)
+        {
+            ColorDialog dialog = new ColorDialog();
+            dialog.ShowDialog();
+            TextBox.SelectionColor = dialog.Color;
+            is_color_changed = true;
+        }
+
+
     }
 }
