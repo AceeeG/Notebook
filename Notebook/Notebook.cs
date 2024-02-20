@@ -228,6 +228,9 @@ namespace Notebook
             is_color_changed = true;
         }
 
-
+        public void Spravka(object sender, EventArgs e)
+        {
+            MessageBox.Show("Текстовый редактор\nВсе права защищены");
+        }
     }
 }
